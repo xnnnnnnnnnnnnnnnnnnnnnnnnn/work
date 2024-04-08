@@ -2,9 +2,15 @@
 spring:
   datasource:
     name: admin  #????
-    url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://localhost:3306/freshfood
     username: root
-    password: 123456
+    password: 1234
     driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8088
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #扫描所有mybatis的xml文件
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #最终xml文件连接的sql显示
