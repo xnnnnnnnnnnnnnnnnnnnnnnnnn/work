@@ -1,8 +1,10 @@
 package com.example.work.controller;
 
+import com.example.work.controller.dto.UserDto;
 import com.example.work.dao.User;
 import com.example.work.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,6 +24,19 @@ public class userController {
     @GetMapping("/select/{userid}")
     public User select(@PathVariable String userid){
         return userMapper.select(userid);
+    }
+
+
+    @PostMapping("/login")
+    public boolean login(@RequestBody UserDto userDto) {
+        //requestbody 将前端json转成java对象
+        String userid=userDto.getUserid();
+        String password=userDto.getPassword();
+        System.out.println(userid+":"+password);
+        if(userid==null || password==null){
+            return false;
+        }
+        return userService.login(userDto);
     }
 
     @PostMapping

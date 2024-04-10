@@ -14,6 +14,9 @@ public interface userMapper {
     @Select("select * from user where userid=#{userid}")
     User select(String userid);
 
+    @Select("select * from user where userid=#{userid} and password=#{password}")
+    User login(String userid,String password);
+
     @Insert ("INSERT INTO user(userid,password,phone,adress,other) VALUES(#{userid},#{password},#{phone},#{adress},#{other})")
     Integer insert(User user);
 
