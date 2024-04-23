@@ -14,7 +14,10 @@ public interface supplierMapper {
     @Select("select * from supplier where supplierid=#{supplierid}")
     Supplier select(String supplierid);
 
-    @Insert("INSERT INTO supplier(supplierid,phone,other) VALUES(#{supplierid},#{phone},#{other})")
+    @Select("select * from supplier where supplierid=#{supplierid} and password=#{password}")
+    Supplier login(String supplierid,String password);
+
+    @Insert("INSERT INTO supplier(supplierid,phone,other,password) VALUES(#{supplierid},#{phone},#{other},#{password})")
     Integer insert(Supplier supplier);
 
     Integer update(Supplier supplier);

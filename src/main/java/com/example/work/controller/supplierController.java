@@ -1,5 +1,7 @@
 package com.example.work.controller;
 
+import com.example.work.controller.dto.SupplierDto;
+import com.example.work.controller.dto.UserDto;
 import com.example.work.dao.Supplier;
 import com.example.work.dao.User;
 import com.example.work.mapper.supplierMapper;
@@ -32,6 +34,16 @@ public class supplierController {
         return supplierService.save(supplier);
     }
 
+    @PostMapping("/login")
+    public boolean login(@RequestBody SupplierDto supplierDto) {
+        String supplierid=supplierDto.getSupplierid();
+        String password=supplierDto.getPassword();
+        System.out.println(supplierid+":"+password);
+        if(supplierid==null || password==null){
+            return false;
+        }
+        return supplierService.login(supplierDto);
+    }
     @DeleteMapping("/delete/{Supplierid}")
     public Integer Delete(@PathVariable String Supplierid){
         return supplierMapper.delete(Supplierid);
