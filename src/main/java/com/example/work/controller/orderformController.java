@@ -1,15 +1,14 @@
 package com.example.work.controller;
 
+import com.example.work.controller.dto.OrderformDto;
+
 import com.example.work.dao.Orderform;
-import com.example.work.dao.User;
+
 import com.example.work.service.OrderformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/orderform")
@@ -61,6 +60,32 @@ public class orderformController {
         pageNum=(pageNum-1)*pageSize;
         List<Orderform> data=orderformMapper.selectPage(pageNum,pageSize);
         Integer total=orderformMapper.selectTotal();
+        Map<String,Object> res=new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
+    }
+
+    @GetMapping("/page2")  //分页查询接口原理
+    public Map<String,Object> findpageSupplier(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String supplierid){
+        pageNum=(pageNum-1)*pageSize;
+        Integer total=orderformMapper.selectTotal(supplierid);
+        List<OrderformDto> data1=orderformMapper.selectPage(supplierid);
+        List<OrderformDto> data=new ArrayList<>();
+        int count=1;
+        System.out.println("data1数据如下所示："+data1);
+        for(OrderformDto i:data1){
+            System.out.println("count数据如下所示："+count+"pagenum:"+pageNum);
+            if(count==(pageNum+pageSize)){
+                System.out.println("-----------pageNum:"+pageNum+"pageSize:"+pageSize+"count:"+count);
+                break;
+            }
+            if(count>=pageNum){
+                data.add(i);
+                System.out.println("data:-------"+i);
+            }
+            count=count+1;
+        }
         Map<String,Object> res=new HashMap<>();
         res.put("data",data);
         res.put("total",total);

@@ -29,4 +29,10 @@ public interface foodMapper {
 
     @Select("select count(*) from food")
     Integer selectTotal();
+
+    @Select("select * from food where supplierid=#{supplierid}")
+    List<Food> selectPage(String supplierid);
+
+    @Select("select count(*) from food where supplierid=#{supplierid}")
+    Integer selectTotal(String supplierid);
 }
