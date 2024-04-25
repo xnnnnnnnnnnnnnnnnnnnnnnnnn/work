@@ -24,14 +24,20 @@ public interface orderformMapper {
     Integer delete(@Param("orderid") long orderid);
 
     @Select("select * from orderform limit #{pageNum},#{pageSize}")
-    List<Orderform> selectPage(Integer pageNum, Integer pageSize);
+    List<Orderform> selectPage0(Integer pageNum, Integer pageSize);
 
     @Select("select count(*) from orderform")
-    Integer selectTotal();
+    Integer selectTotal0();
 
     @Select("select * from supplierorder where supplierid=#{supplierid}")
     List<OrderformDto> selectPage(String supplierid);
 
     @Select("select count(*) from supplierorder where supplierid=#{supplierid}")
     Integer selectTotal(String supplierid);
+
+    @Select("select * from orderform where userid=#{userid}")
+    List<Orderform> selectPage2(String userid);
+
+    @Select("select count(*) from orderform where userid=#{userid}")
+    Integer selectTotal2(String userid);
 }

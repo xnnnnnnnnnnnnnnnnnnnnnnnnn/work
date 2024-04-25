@@ -56,8 +56,8 @@ public class foodController {
     @GetMapping("/page")  //分页查询接口原理
     public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
         pageNum=(pageNum-1)*pageSize;
-        List<Food> data=foodMapper.selectPage(pageNum,pageSize);
-        Integer total=foodMapper.selectTotal();
+        List<Food> data=foodMapper.selectPage0(pageNum,pageSize);
+        Integer total=foodMapper.selectTotal0();
         Map<String,Object> res=new HashMap<>();
         res.put("data",data);
         res.put("total",total);
@@ -65,7 +65,7 @@ public class foodController {
     }
     @GetMapping("/page2")  //分页查询接口原理
     public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String supplierid){
-        pageNum=(pageNum-1)*pageSize;
+        pageNum=(pageNum-1)*pageSize+1;
         Integer total=foodMapper.selectTotal(supplierid);
         List<Food> data1=foodMapper.selectPage(supplierid);
         List<Food> data=new ArrayList<>();
@@ -88,4 +88,31 @@ public class foodController {
         res.put("total",total);
         return res;
     }
+
+    @GetMapping("/page3")  //分页查询接口原理
+    public Map<String,Object> findpage2(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        pageNum=(pageNum-1)*pageSize+1;
+        Integer total=foodMapper.selectTotal1();
+        List<Food> data1=foodMapper.selectPage1();
+        List<Food> data=new ArrayList<>();
+        int count=1;
+        System.out.println("data1数据如下所示："+data1);
+        for(Food i:data1){
+            System.out.println("count数据如下所示："+count+"pagenum:"+pageNum);
+            if(count==(pageNum+pageSize)){
+                System.out.println("-----------pageNum:"+pageNum+"pageSize:"+pageSize+"count:"+count);
+                break;
+            }
+            if(count>=pageNum){
+                data.add(i);
+                System.out.println("data:-------"+i);
+            }
+            count=count+1;
+        }
+        Map<String,Object> res=new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
+    }
+
 }

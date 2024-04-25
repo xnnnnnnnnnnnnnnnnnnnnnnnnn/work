@@ -25,14 +25,20 @@ public interface foodMapper {
     Integer delete(@Param("foodid") String foodid);
 
     @Select("select * from food limit #{pageNum},#{pageSize}")
-    List<Food> selectPage(Integer pageNum, Integer pageSize);
+    List<Food> selectPage0(Integer pageNum, Integer pageSize);
 
     @Select("select count(*) from food")
-    Integer selectTotal();
+    Integer selectTotal0();
 
     @Select("select * from food where supplierid=#{supplierid}")
     List<Food> selectPage(String supplierid);
 
     @Select("select count(*) from food where supplierid=#{supplierid}")
     Integer selectTotal(String supplierid);
+
+    @Select("select * from food where number >0")
+    List<Food> selectPage1();
+
+    @Select("select count(*) from food where number >0")
+    Integer selectTotal1();
 }

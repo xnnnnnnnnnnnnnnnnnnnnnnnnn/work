@@ -58,8 +58,8 @@ public class orderformController {
     @GetMapping("/page")  //分页查询接口原理
     public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
         pageNum=(pageNum-1)*pageSize;
-        List<Orderform> data=orderformMapper.selectPage(pageNum,pageSize);
-        Integer total=orderformMapper.selectTotal();
+        List<Orderform> data=orderformMapper.selectPage0(pageNum,pageSize);
+        Integer total=orderformMapper.selectTotal0();
         Map<String,Object> res=new HashMap<>();
         res.put("data",data);
         res.put("total",total);
@@ -68,7 +68,7 @@ public class orderformController {
 
     @GetMapping("/page2")  //分页查询接口原理
     public Map<String,Object> findpageSupplier(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String supplierid){
-        pageNum=(pageNum-1)*pageSize;
+        pageNum=(pageNum-1)*pageSize+1;
         Integer total=orderformMapper.selectTotal(supplierid);
         List<OrderformDto> data1=orderformMapper.selectPage(supplierid);
         List<OrderformDto> data=new ArrayList<>();
@@ -91,4 +91,31 @@ public class orderformController {
         res.put("total",total);
         return res;
     }
+
+    @GetMapping("/page3")  //分页查询接口原理
+    public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String userid){
+        pageNum=(pageNum-1)*pageSize+1;
+        Integer total=orderformMapper.selectTotal2(userid);
+        List<Orderform> data1=orderformMapper.selectPage2(userid);
+        List<Orderform> data=new ArrayList<>();
+        int count=1;
+        System.out.println("data1数据如下所示："+data1);
+        for(Orderform i:data1){
+            System.out.println("count数据如下所示："+count+"pagenum:"+pageNum);
+            if(count==(pageNum+pageSize)){
+                System.out.println("-----------pageNum:"+pageNum+"pageSize:"+pageSize+"count:"+count);
+                break;
+            }
+            if(count>=pageNum){
+                data.add(i);
+                System.out.println("data:-------"+i);
+            }
+            count=count+1;
+        }
+        Map<String,Object> res=new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
+    }
+
 }

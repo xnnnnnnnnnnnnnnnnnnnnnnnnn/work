@@ -12,8 +12,12 @@ public class OrderformService {
     public int save(Orderform orderform){
         if(orderformMapper.select(String.valueOf(orderform.getOrderid()))==null){
 //            新增
-            return orderformMapper.insert(orderform);
+           return orderformMapper.insert(orderform);
         }
+//        else if(String.valueOf(orderform.getOrderid())==null){
+//            orderform.setOrderid(System.currentTimeMillis());
+//            return orderformMapper.insert(orderform);
+//        }
         else{
             //更改
             return orderformMapper.update(orderform);
