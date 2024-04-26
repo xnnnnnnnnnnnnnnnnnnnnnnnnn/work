@@ -8,6 +8,7 @@ import com.example.work.service.OrderformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.*;
 
 @RestController
@@ -26,7 +27,7 @@ public class orderformController {
     }
 
     @PostMapping
-    public Integer save(@RequestBody Orderform orderform){
+    public Integer save(@RequestBody Orderform orderform) throws ParseException {
         //新增或者更新
         return orderformService.save(orderform);
     }
@@ -92,11 +93,37 @@ public class orderformController {
         return res;
     }
 
-    @GetMapping("/page3")  //分页查询接口原理
-    public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String userid){
+    @GetMapping("/page3")  //未申诉分页查询
+    public Map<String,Object> findpage1(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String userid){
         pageNum=(pageNum-1)*pageSize+1;
         Integer total=orderformMapper.selectTotal2(userid);
         List<Orderform> data1=orderformMapper.selectPage2(userid);
+        List<Orderform> data=new ArrayList<>();
+        int count=1;
+        System.out.println("data1数据如下所示："+data1);
+        for(Orderform i:data1){
+            System.out.println("count数据如下所示："+count+"pagenum:"+pageNum);
+            if(count==(pageNum+pageSize)){
+                System.out.println("-----------pageNum:"+pageNum+"pageSize:"+pageSize+"count:"+count);
+                break;
+            }
+            if(count>=pageNum){
+                data.add(i);
+                System.out.println("data:-------"+i);
+            }
+            count=count+1;
+        }
+        Map<String,Object> res=new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
+    }
+
+    @GetMapping("/page4")  //申诉分页查询
+    public Map<String,Object> findpage02(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String userid){
+        pageNum=(pageNum-1)*pageSize+1;
+        Integer total=orderformMapper.selectTotal3(userid);
+        List<Orderform> data1=orderformMapper.selectPage3(userid);
         List<Orderform> data=new ArrayList<>();
         int count=1;
         System.out.println("data1数据如下所示："+data1);

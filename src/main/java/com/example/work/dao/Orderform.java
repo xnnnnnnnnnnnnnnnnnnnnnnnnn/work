@@ -1,5 +1,6 @@
 package com.example.work.dao;
 
+import java.sql.Timestamp;
 
 public class Orderform {
 
@@ -8,7 +9,7 @@ public class Orderform {
   private String foodid;
   private String state;
   private String other;
-  private java.sql.Timestamp time;
+  private String time;
 
 
   public long getOrderid() {
@@ -56,12 +57,14 @@ public class Orderform {
   }
 
 
-  public java.sql.Timestamp getTime() {
+  public String getTime() {
     return time;
   }
 
-  public void setTime(java.sql.Timestamp time) {
-    this.time = time;
+  public void setTime(String time) {
+    this.time= time;
   }
+
+
 
 }

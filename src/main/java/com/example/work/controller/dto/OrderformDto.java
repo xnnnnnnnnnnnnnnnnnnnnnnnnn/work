@@ -9,7 +9,7 @@ public class OrderformDto {
     private String foodid;
     private String state;
     private String other;
-    private java.sql.Timestamp time;
+    private String time;
     private String supplierid;
     private long number;
 }

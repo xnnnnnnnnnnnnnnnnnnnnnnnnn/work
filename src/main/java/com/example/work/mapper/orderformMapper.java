@@ -15,7 +15,7 @@ public interface orderformMapper {
     @Select("select * from orderform where orderid=#{orderid}")
     Orderform select(String orderid);
 
-    @Insert("INSERT INTO orderform(orderid,userid,foodid,state,other) VALUES(#{orderid},#{userid},#{foodid},#{state},#{other})")
+    @Insert("INSERT INTO orderform(orderid,userid,foodid,state,other,time ) VALUES(#{orderid},#{userid},#{foodid},#{state},#{other},#{time})")
     Integer insert(Orderform orderform);
 
     Integer update(Orderform orderform);
@@ -35,9 +35,15 @@ public interface orderformMapper {
     @Select("select count(*) from supplierorder where supplierid=#{supplierid}")
     Integer selectTotal(String supplierid);
 
-    @Select("select * from orderform where userid=#{userid}")
+    @Select("select * from orderform where userid=#{userid} AND( state='下单成功' OR state='已发货' OR state='运输中' OR state='上门送货')")
     List<Orderform> selectPage2(String userid);
 
-    @Select("select count(*) from orderform where userid=#{userid}")
+    @Select("select count(*) from orderform where userid=#{userid} AND( state='下单成功' OR state='已发货' OR state='运输中' OR state='上门送货')")
     Integer selectTotal2(String userid);
+
+    @Select("select * from orderform where userid=#{userid} AND state!='下单成功' and state!='已发货' and state!='运输中' and state!='上门送货'")
+    List<Orderform> selectPage3(String userid);
+
+    @Select("select count(*) from orderform where userid=#{userid} AND state!='下单成功' and state!='已发货' and state!='运输中' and state!='上门送货'")
+    Integer selectTotal3(String userid);
 }
