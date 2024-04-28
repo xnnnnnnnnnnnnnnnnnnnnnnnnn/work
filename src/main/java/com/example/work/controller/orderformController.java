@@ -145,4 +145,30 @@ public class orderformController {
         return res;
     }
 
+    @GetMapping("/page5")  //申诉分页查询
+    public Map<String,Object> findpage03(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        pageNum=(pageNum-1)*pageSize+1;
+        Integer total=orderformMapper.selectTotal4();
+        List<Orderform> data1=orderformMapper.selectPage4();
+        List<Orderform> data=new ArrayList<>();
+        int count=1;
+        System.out.println("data1数据如下所示："+data1);
+        for(Orderform i:data1){
+            System.out.println("count数据如下所示："+count+"pagenum:"+pageNum);
+            if(count==(pageNum+pageSize)){
+                System.out.println("-----------pageNum:"+pageNum+"pageSize:"+pageSize+"count:"+count);
+                break;
+            }
+            if(count>=pageNum){
+                data.add(i);
+                System.out.println("data:-------"+i);
+            }
+            count=count+1;
+        }
+        Map<String,Object> res=new HashMap<>();
+        res.put("data",data);
+        res.put("total",total);
+        return res;
+    }
+
 }
