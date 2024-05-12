@@ -47,9 +47,16 @@ public interface orderformMapper {
     @Select("select count(*) from orderform where userid=#{userid} AND state!='下单成功' AND state!='已发货' and state!='运输中' and state!='上门送货'")
     Integer selectTotal3(String userid);
 
-    @Select("select * from orderform where state='待审核' or state='审核通过' or state='退款中' or state='退款成功' or state='审核失败'")
-    List<Orderform> selectPage4();
+    @Select("select * from orderform where (state='待审核' or state='审核通过' or state='退款中' or state='退款成功' or state='审核失败') and (orderid<(#{time}-7000000) or orderid>#{time} )")
+    List<Orderform> selectPage4(Integer time);
 
-    @Select("select count(*) from orderform where state='待审核' or state='审核通过' or state='退款中' or state='退款成功' or state='审核失败'")
-    Integer selectTotal4();
+    @Select("select count(*) from orderform where (state='待审核' or state='审核通过' or state='退款中' or state='退款成功' or state='审核失败')and (orderid<(#{time}-7000000) or orderid>#{time} )")
+    Integer selectTotal4(Integer time);
+
+    @Select("select * from supplierorder where supplierid=#{supplierid} AND state!='下单成功' and state!='已发货' and state!='运输中' and state!='上门送货'")
+    List<OrderformDto> selectPage5(String supplierid);
+
+    @Select("select count(*) from supplierorder where supplierid=#{supplierid} AND state!='下单成功' AND state!='已发货' and state!='运输中' and state!='上门送货'")
+    Integer selectTotal5(String supplierid);
+
 }

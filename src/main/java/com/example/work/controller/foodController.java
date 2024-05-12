@@ -53,7 +53,7 @@ public class foodController {
         return foodMapper.findall();
     }
 
-    @GetMapping("/page")  //分页查询接口原理
+    @GetMapping("/page")  //管理员分页查询接口原理
     public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
         pageNum=(pageNum-1)*pageSize;
         List<Food> data=foodMapper.selectPage0(pageNum,pageSize);
@@ -63,7 +63,7 @@ public class foodController {
         res.put("total",total);
         return res;
     }
-    @GetMapping("/page2")  //分页查询接口原理
+    @GetMapping("/page2")  //商家分页查询接口原理
     public Map<String,Object> findpage(@RequestParam Integer pageNum, @RequestParam Integer pageSize,@RequestParam String supplierid){
         pageNum=(pageNum-1)*pageSize+1;
         Integer total=foodMapper.selectTotal(supplierid);
