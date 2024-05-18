@@ -1,7 +1,7 @@
 package com.example.work.dao;
 
 import java.sql.Timestamp;
-
+//实例（对象）
 public class Orderform {
 
   private long orderid;
